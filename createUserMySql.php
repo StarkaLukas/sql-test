@@ -13,6 +13,17 @@ if($conn->connect_error){
     die("Connection failed: " . $conn->connect_error);
 }
 
+if((!isset($_POST["submit"])) && !empty($_POST["submit"])){
+    $_username = $conn->real_escape_string($_POST["username"]);
+    $_password = $conn->real_escape_string($_POST["password1"]);
+    if(strcmp($_password, $conn->real_escape_string($_POST["password2"])) != 0){
+        include("create_user_form.html");
+        exit;
+    }
+
+    $_password = "saver" . $_password;
+}
+
 $conn->close();
 echo "end of php file";
 ?>
