@@ -17,11 +17,13 @@ if((!isset($_POST["submit"])) && !empty($_POST["submit"])){
     $_username = $conn->real_escape_string($_POST["username"]);
     $_password = $conn->real_escape_string($_POST["password1"]);
     if(strcmp($_password, $conn->real_escape_string($_POST["password2"])) != 0){
+        # password is not repeated correctly
         include("create_user_form.html");
         exit;
     }
 
     $_password = "saver" . $_password;
+    $insertStatement = "INSERT INTO login_username (username, password, user_deleted, last_login) VALUES('$_username', md5('$_password'), 0, NOW());";
 }
 
 $conn->close();
