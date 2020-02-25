@@ -19,8 +19,9 @@ if((isset($_POST["submit"])) && !empty($_POST["submit"])){
 
     $_password = "saver" . $_password;
     $_sql = "SELECT * FROM login_username WHERE username='$_username' AND password=md5('$_password') AND user_deleted=0 LIMIT 1";
+    echo "you are now logged in $_username";
 } else{
-
+    include("login_form.html");
 }
 
 $conn->close();
