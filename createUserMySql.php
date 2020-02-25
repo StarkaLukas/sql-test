@@ -24,6 +24,16 @@ if((!isset($_POST["submit"])) && !empty($_POST["submit"])){
 
     $_password = "saver" . $_password;
     $insertStatement = "INSERT INTO login_username (username, password, user_deleted, last_login) VALUES('$_username', md5('$_password'), 0, NOW());";
+
+    if($_res = $conn->query($insertStatement)){
+        echo "<br>User $_username has been added to the database.<br>Try to log in.";
+        include("login_form.html");
+    }else{
+        echo "<br>NO insertion. User could not be added. Maybe user $_username already exists.";
+        include("create_user_form.html");
+    }
+} else{
+    include("create_user_form.html");
 }
 
 $conn->close();
