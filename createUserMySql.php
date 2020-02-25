@@ -13,7 +13,7 @@ if($conn->connect_error){
     die("Connection failed: " . $conn->connect_error);
 }
 
-if((!isset($_POST["submit"])) && !empty($_POST["submit"])){
+if((isset($_POST["submit"])) && !empty($_POST["submit"])){
     $_username = $conn->real_escape_string($_POST["username"]);
     $_password = $conn->real_escape_string($_POST["password1"]);
     if(strcmp($_password, $conn->real_escape_string($_POST["password2"])) != 0){
@@ -23,7 +23,7 @@ if((!isset($_POST["submit"])) && !empty($_POST["submit"])){
     }
 
     $_password = "saver" . $_password;
-    $insertStatement = "INSERT INTO login_username (username, password, user_deleted, last_login) VALUES('$_username', md5('$_password'), 0, NOW());";
+    $insertStatement = "INSERT INTO login_username (username, password, user_deleted, last_login) VALUES ('$_username', md5('$_password'),0,NOW())";
 
     if($_res = $conn->query($insertStatement)){
         echo "<br>User $_username has been added to the database.<br>Try to log in.";
@@ -37,5 +37,4 @@ if((!isset($_POST["submit"])) && !empty($_POST["submit"])){
 }
 
 $conn->close();
-echo "end of php file";
 ?>
