@@ -39,4 +39,11 @@ if((isset($_POST["submit"])) && !empty($_POST["submit"])){
 }
 
 $conn->close();
+
+if($_SESSION["login"] != 1){
+    include("login_form.html");
+    exit;
+}
+
+echo "<br>User " . $_SESSION["user"]["username"] . " is logged in since " . $_SESSION["user"]["last_login"] . "<br>";
 ?>
