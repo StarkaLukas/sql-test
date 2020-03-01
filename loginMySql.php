@@ -19,7 +19,21 @@ if((isset($_POST["submit"])) && !empty($_POST["submit"])){
 
     $_password = "saver" . $_password;
     $_sql = "SELECT * FROM login_username WHERE username='$_username' AND password=md5('$_password') AND user_deleted=0 LIMIT 1";
-    echo "you are now logged in $_username";
+
+    if($_res = $conn->query($_sql)){
+        if($_res->num_rows > 0){
+            echo "Der Login war erfolgreich.<br>";
+            $_SESSION["login"] = 1;
+            $_SESSION["user"] = $_res->fetch_assoc();
+
+            $_sql = "UPDATE login_username SET last_login=NOW() WHERE id=" . $_SESSION["user"]["id"];
+            $conn->query($_sql);
+        }
+    }else{
+        echo "Die Logindaten sind nicht korrekt.<br>";
+        include("login_form.html");
+        exit;
+    }
 } else{
     include("login_form.html");
 }
